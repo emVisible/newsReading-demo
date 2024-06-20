@@ -3,6 +3,8 @@ package com.example.prac15;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,13 +15,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Login extends BaseActivity {
     EditText accountComponent;
     EditText passwordComponent;
-    Button submitComponent;
+   Button submitComponent;
     CheckBox checkBoxComponent;
     Database instance;
 
@@ -34,6 +37,26 @@ public class Login extends BaseActivity {
         // bindSubmitToPreferences();
         bindToRegistry();
         isCheckedRememberPassword();
+        initLanguage();
+    }
+
+    private void initLanguage() {
+
+        Button switchToEnglishButton = findViewById(R.id.switch_language_to_english);
+        Button switchToChineseButton = findViewById(R.id.switch_language_to_chinese);
+
+        switchToEnglishButton.setOnClickListener(v -> switchLanguage("en"));
+        switchToChineseButton.setOnClickListener(v -> switchLanguage("zh"));
+    }
+
+    private void switchLanguage(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = new Configuration(resources.getConfiguration());
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        recreate();
     }
 
     private void init() {

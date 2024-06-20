@@ -5,11 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import java.util.Locale;
 
 public class BaseActivity extends AppCompatActivity {
     private ForceOfflineReceiver receiver;
@@ -50,10 +55,17 @@ public class BaseActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-            dialog.setTitle("系统提示");
+            Locale currentLocale = context.getResources().getConfiguration().locale;
+            String language = currentLocale.getLanguage();
+            if (language.equals("zh")) {
+                dialog.setTitle("系统提示");
+                dialog.setMessage("帐号状态已变更, 请重新登录");
+            } else {
+                dialog.setTitle("System Alert");
+                dialog.setMessage("Account status has changed, please log in again");
+            }
             dialog.setCancelable(false);
-            dialog.setMessage("帐号状态已变更, 请重新登录");
-            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     ActivityCollector.finishAll();

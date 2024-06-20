@@ -9,8 +9,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/system_toolbar"
             android:layout_width="match_parent"
@@ -22,12 +20,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
         <Space
             android:layout_width="match_parent"
             android:layout_height="627dp"
             android:layout_weight="1" />
-
     </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView
